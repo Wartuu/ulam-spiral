@@ -30,8 +30,8 @@ public class Draw extends Canvas implements MouseWheelListener, KeyListener {
 
     private double dt;
     private long lastTime = System.nanoTime();
-    private double targetFPS = 144.0;
-    private double targetTime = 10000 / targetFPS;
+    private double targetFPS = 60.0;
+    private double targetTime = 100000 / targetFPS;
     private double deltaTime = 0.0f;
     private boolean drawing = false;
 
@@ -94,10 +94,22 @@ public class Draw extends Canvas implements MouseWheelListener, KeyListener {
 
                 boolean updated = false;
 
-                if(ml) {camera.setCameraX((float) (camera.getCameraX() + (0.2f * deltaTime) / camera.getZoomLevel())); updated = true;}
-                if(mr) {camera.setCameraX((float) (camera.getCameraX() - (0.2f * deltaTime) / camera.getZoomLevel())); updated = true;}
-                if(md) {camera.setCameraY((float) (camera.getCameraY() - (0.2f * deltaTime) / camera.getZoomLevel())); updated = true;}
-                if(mu) {camera.setCameraY((float) (camera.getCameraY() + (0.2f * deltaTime) / camera.getZoomLevel())); updated = true;}
+                if (ml) {
+                    camera.setCameraX((float) (camera.getCameraX() + (0.2f / camera.getZoomLevel()) * deltaTime));
+                    updated = true;
+                }
+                if (mr) {
+                    camera.setCameraX((float) (camera.getCameraX() - (0.2f / camera.getZoomLevel()) * deltaTime));
+                    updated = true;
+                }
+                if (md) {
+                    camera.setCameraY((float) (camera.getCameraY() - (0.2f / camera.getZoomLevel()) * deltaTime));
+                    updated = true;
+                }
+                if (mu) {
+                    camera.setCameraY((float) (camera.getCameraY() + (0.2f / camera.getZoomLevel()) * deltaTime));
+                    updated = true;
+                }
 
                 if(updated) {
                     repaint();
