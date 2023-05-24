@@ -97,13 +97,13 @@ public class Draw extends Canvas implements MouseWheelListener, KeyListener {
             if(md) {camera.setCameraY((float) (camera.getCameraY() - (0.3f * deltaTime) / camera.getZoomLevel())); updated = true;}
             if(mu) {camera.setCameraY((float) (camera.getCameraY() + (0.3f * deltaTime) / camera.getZoomLevel())); updated = true;}
 
+            System.out.println(camera.getCameraX() + " | " + camera.getCameraY());
 
 
             if(updated) {
                 repaint();
             }
         }
-
     }
 
     public void updateMap(Vector<Vector<Long>> map) {
