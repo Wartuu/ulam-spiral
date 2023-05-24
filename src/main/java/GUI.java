@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.Objects;
 import java.util.Vector;
 
 public class GUI {
@@ -20,15 +23,42 @@ public class GUI {
 
         layout.getGrid().add(new Draw(Ulam.generate2DSquare(1)));
 
+        for (Component c : layout.getGrid().getComponents()) {
+            if(c instanceof Draw) {
+                System.out.println(layout.getColorMapEnable().isSelected());
+                ((Draw) c).setColorMap(false);
+            }
+        }
+
         if(layout.getGrid() == null) {
             System.out.println("wtf");
         }
+
+
 
         buttonGroup.add(layout.getColorMapEnable());
         buttonGroup.add(layout.getPrimeEnable());
 
 
+
         SwingUtilities.invokeLater(()->{
+            layout.getPrimeEnable().addActionListener(e -> {
+                for (Component c : layout.getGrid().getComponents()) {
+                    if(c instanceof Draw) {
+                        System.out.println(layout.getColorMapEnable().isSelected());
+                        ((Draw) c).setColorMap(false);
+                    }
+                }
+            });
+
+            layout.getColorMapEnable().addActionListener(e -> {
+                for (Component c : layout.getGrid().getComponents()) {
+                    if(c instanceof Draw) {
+                        System.out.println(layout.getColorMapEnable().isSelected());
+                        ((Draw) c).setColorMap(true);
+                    }
+                }
+            });
 
             layout.getGenerate().addActionListener(new ActionListener() {
                 @Override
@@ -36,15 +66,8 @@ public class GUI {
                     int size = Integer.parseInt(layout.getInputNumber().getText());
                     for (Component c : layout.getGrid().getComponents()) {
                         if(c instanceof Draw) {
-                            boolean colorMap = layout.getColorMapEnable().isSelected();
-
-
-                            ((Draw) c).setColorMap(colorMap);
                             ((Draw) c).updateMap(Ulam.generate2DSquare(size));
                             c.repaint();
-
-
-                            System.out.println("Found canvas!");
                         }
                     }
 
