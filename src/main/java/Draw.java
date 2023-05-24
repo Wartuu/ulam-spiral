@@ -1,3 +1,4 @@
+import javax.tools.Tool;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -38,6 +39,7 @@ public class Draw extends Canvas implements MouseWheelListener, KeyListener {
 };
 
     private Color bg = new Color(0x303030);
+
 
 
 
@@ -136,6 +138,8 @@ public class Draw extends Canvas implements MouseWheelListener, KeyListener {
         } else {
             g.drawImage(bufferPrimes, 0, 0, null);
         }
+
+        Toolkit.getDefaultToolkit().sync();
 
     }
 
