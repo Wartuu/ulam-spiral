@@ -8,6 +8,8 @@ public class Layout {
     private JTextField inputNumber;
     private JRadioButton colorMapEnable;
     private JRadioButton primeEnable;
+    private JRadioButton squareMode;
+    private JRadioButton spiralMode;
 
     public JButton getGenerate() {
         return generate;
@@ -39,5 +41,13 @@ public class Layout {
 
     public JRadioButton getPrimeEnable() {
         return primeEnable;
+    }
+
+    public JRadioButton getSquareMode() {
+        return squareMode;
+    }
+
+    public JRadioButton getSpiralMode() {
+        return spiralMode;
     }
 }

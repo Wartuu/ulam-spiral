@@ -22,6 +22,8 @@ public class Draw extends Canvas implements MouseWheelListener, KeyListener {
     private BufferedImage bufferPrimes;
     private BufferedImage bufferColors;
 
+    private long sizeOfPrimes = 0;
+
     private Color[] colors = {
             new Color(0x5f3a3a),
             new Color(0x34211a),
@@ -38,6 +40,7 @@ public class Draw extends Canvas implements MouseWheelListener, KeyListener {
     private Color bg = new Color(0x303030);
 
 
+
     Draw(Vector<Vector<Long>> map) {
         mouseX = 0;
         mouseY = 0;
@@ -46,6 +49,8 @@ public class Draw extends Canvas implements MouseWheelListener, KeyListener {
         colorMap = false;
         needsUpdate = true;
         bufferPrimes = (BufferedImage) createImage(getWidth(), getHeight());
+
+        sizeOfPrimes = 0;
 
         addMouseWheelListener(this);
         addKeyListener(this);
@@ -89,11 +94,11 @@ public class Draw extends Canvas implements MouseWheelListener, KeyListener {
         g2d.drawRect(0, 0, primes.size(), primes.size());
 
 
-
-
+        long sPrimes = 0;
         for (int y = 0; y < primes.size(); y++) {
             for (int x = 0; x < primes.get(y).size(); x++) {
                 if(primes.get(y).get(x)) {
+                    sPrimes++;
                     g2d.setColor(Color.LIGHT_GRAY);
                 } else {
                     g2d.setColor(Color.DARK_GRAY);
@@ -103,11 +108,14 @@ public class Draw extends Canvas implements MouseWheelListener, KeyListener {
             }
         }
 
+        sizeOfPrimes = sPrimes;
+
+
         g2d = (Graphics2D) bufferColors.getGraphics();
 
         for (int y = 0; y < map.size(); y++) {
             for (int x = 0; x < map.get(y).size(); x++) {
-                g2d.setColor(colors[Utils.getDigitLeft(map.get(y).get(x), 0) - 1]);
+                g2d.setColor(colors[Utils.getDigitLeft(map.get(y).get(x), 0)]);
 
                 g2d.drawLine(x, y, x, y);
             }
@@ -175,5 +183,7 @@ public class Draw extends Canvas implements MouseWheelListener, KeyListener {
 
     }
 
-
+    public long getSizeOfPrimes() {
+        return sizeOfPrimes;
+    }
 }

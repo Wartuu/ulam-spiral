@@ -2,3 +2,5 @@ out
 target
 .idea
 *.class
+target/classes/Draw.class
+*.class

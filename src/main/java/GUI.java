@@ -10,7 +10,8 @@ import java.util.Vector;
 public class GUI {
     private final JFrame jFrame = new JFrame("ulam-spiral");
     private final Layout layout = new Layout();
-    private final ButtonGroup buttonGroup = new ButtonGroup();
+    private final ButtonGroup modes = new ButtonGroup();
+    private final ButtonGroup types = new ButtonGroup();
 
     public GUI() {
         jFrame.setContentPane(layout.getRoot());
@@ -36,8 +37,11 @@ public class GUI {
 
 
 
-        buttonGroup.add(layout.getColorMapEnable());
-        buttonGroup.add(layout.getPrimeEnable());
+        modes.add(layout.getColorMapEnable());
+        modes.add(layout.getPrimeEnable());
+
+        types.add(layout.getSpiralMode());
+        types.add(layout.getSquareMode());
 
 
 
@@ -64,28 +68,26 @@ public class GUI {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int size = Integer.parseInt(layout.getInputNumber().getText());
+                    long sizePrimes = (long) size*size;
+                    long primes = 0;
                     for (Component c : layout.getGrid().getComponents()) {
                         if(c instanceof Draw) {
-                            ((Draw) c).updateMap(Ulam.generate2DSquare(size));
+                            if(layout.getSquareMode().isSelected()) {
+                                ((Draw) c).updateMap(Ulam.generate2DSquare(size));
+                            } else {
+                                ((Draw) c).updateMap(Ulam.generate2DSpiral(size));
+                            }
+
+                            primes = ((Draw) c).getSizeOfPrimes();
                             c.repaint();
                         }
                     }
 
 
-                    Vector<Vector<Boolean>> primes = Ulam.checkForPrimary(Ulam.generate2DSquare(size));
-                    long counter = 0;
-                    long sizePrimes = (long) primes.size() *primes.size();
-
-                    for (Vector<Boolean> y : primes) {
-                        for (boolean x : y) {
-                            if(x) {
-                                counter++;
-                            }
-                        }
-                    }
 
 
-                    layout.getGenerate().setText("generate | " + counter + "/" + sizePrimes + " (last generated)");
+
+                    layout.getGenerate().setText("generate | " + primes + "/" + sizePrimes + " (last generated)");
                 }
             });
         });
